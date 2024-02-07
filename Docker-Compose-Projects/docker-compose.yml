@@ -9,6 +9,8 @@ services:
       - "80:80"
     depends_on:
       - backend
+    networks:
+      - three-tier-net 
   backend:
     container_name: backend
     build: 
@@ -23,6 +25,8 @@ services:
       - MYSQL_DATABASE=school
     depends_on:
       - db
+    networks:
+      - three-tier-net
   db:
     container_name: mysql-container
     image: mysql:latest
@@ -33,3 +37,7 @@ services:
       - mysql-data:/var/lib/mysql
 volumes:
   mysql-data:
+networks:
+  three-tier-net:
+    name: three-tier-net
+    driver: bridge
