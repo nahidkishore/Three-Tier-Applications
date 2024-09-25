@@ -38,6 +38,13 @@ Before you begin, make sure you have the following installed:
 
     Open your favorite browser and visit http://localhost:80. Explore the MERN stack application!
 
+### MYSQL Configuration
+``` bash
+CREATE DATABASE school;
+USE school;
+CREATE TABLE student (id INT AUTO_INCREMENT PRIMARY KEY, name varchar(40), roll_number int, class varchar(16));
+CREATE TABLE teacher (id INT AUTO_INCREMENT PRIMARY KEY, name varchar(40), subject varchar(40), class varchar(16));
+```
 ## Data Persistence
     Data persistence is ensured by using Docker volumes. If the MySQL container is deleted, data remains available and is automatically added to a new Docker container by providing the same Docker volume.
 
