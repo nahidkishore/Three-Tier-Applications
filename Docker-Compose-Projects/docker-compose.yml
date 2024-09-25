@@ -19,7 +19,7 @@ services:
     ports: 
       - "3500:3500"
     environment:
-      - MYSQL_HOST=mysql-container
+      - MYSQL_HOST=db
       - MYSQL_USER=root
       - MYSQL_PASSWORD=mysql123
       - MYSQL_DATABASE=school
