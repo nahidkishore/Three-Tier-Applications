@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: nahid0002/three-tier-frontend:v1
+          ports:
+            - containerPort: 80
+          env:
+            - name: REACT_APP_API_BASE_URL
+              value: "http://98.83.212.76:32000"
