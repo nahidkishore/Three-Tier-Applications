@@ -49,3 +49,27 @@ CREATE TABLE teacher (id INT AUTO_INCREMENT PRIMARY KEY, name varchar(40), subje
     Data persistence is ensured by using Docker volumes. If the MySQL container is deleted, data remains available and is automatically added to a new Docker container by providing the same Docker volume.
 
     Feel free to explore and modify the Docker Compose file and related files to enhance your understanding of containerization and deployment using Docker Compose! Happy coding! 🚀
+
+
+npm install express mysql cors nodemon
+
+### MYSQL Configuration
+``` bash
+CREATE DATABASE school;
+
+USE school;
+
+CREATE TABLE student (id INT AUTO_INCREMENT PRIMARY KEY, name varchar(40), roll_number int, class varchar(16));
+
+CREATE TABLE teacher (id INT AUTO_INCREMENT PRIMARY KEY, name varchar(40), subject varchar(40), class varchar(16));
+```
+### Backend-
+
+``` bash
+Install nodejs npm install dotenv Modify the .env and do the changes for database
+
+npm install -g pm2
+
+pm2 start npm --name backend -- start
+```
+Frontend Modify the .env file and update the backend api endpoint
