@@ -35,6 +35,8 @@ services:
       - MYSQL_DATABASE=school
     volumes:
       - mysql-data:/var/lib/mysql
+    networks:
+      - three-teir-net
 volumes:
   mysql-data:
 networks:
