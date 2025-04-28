@@ -5,6 +5,13 @@
 
 This repository showcases the deployment of a three-tier application using Docker Compose. The application consists of a MySQL database, a Node.js backend, and a React.js frontend.
 
+
+# Dockerizing and Deploying Three-Tier Full Stack Applications
+- Deployed multi-tier full-stack applications using Docker and Docker Compose, ensuring seamless integration and scalability.
+- Configured custom networks and volumes for efficient container communication and data persistence across Node.js and React.js applications.
+- Managed MySQL databases within Docker containers, ensuring data integrity and availability through effective volume management.
+
+
 ## Prerequisites
 
 Before you begin, make sure you have the following installed:
@@ -36,7 +43,7 @@ Before you begin, make sure you have the following installed:
 
 3. **Access the Application:**
 
-    Open your favorite browser and visit http://localhost:80. Explore the MERN stack application!
+    Open your favourite browser and visit http://localhost:80. Explore the MERN stack application!
 
 ### MYSQL Configuration
 ``` bash
