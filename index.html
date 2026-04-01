@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Doraemon — Characters Universe</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:ital,wght@0,300;0,600;0,800;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sky: #e8f4fd;
+    --deep-blue: #0066cc;
+    --doraemon-blue: #1a8fe3;
+    --yellow: #FFD700;
+    --pink: #ff6eb4;
+    --red: #ff3b3b;
+    --green: #2ecc71;
+    --purple: #9b59b6;
+    --orange: #ff8c00;
+    --teal: #00b8a9;
+    --white: #ffffff;
+    --dark: #1a1a2e;
+    --text: #2d3436;
+    --muted: #636e72;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--sky);
+    color: var(--text);
+    font-family: 'Nunito', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* Clouds background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 10% 20%, rgba(255,255,255,0.9) 0%, transparent 40%),
+      radial-gradient(ellipse at 90% 10%, rgba(255,255,255,0.8) 0%, transparent 35%),
+      radial-gradient(ellipse at 50% 90%, rgba(26,143,227,0.08) 0%, transparent 60%),
+      linear-gradient(180deg, #e8f4fd 0%, #d0eaff 40%, #b8e0ff 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Floating dots */
+  body::after {
+    content: '✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦';
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    color: rgba(255,215,0,0.15);
+    font-size: 2rem;
+    letter-spacing: 8vw;
+    line-height: 25vh;
+    pointer-events: none;
+    z-index: 0;
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+    overflow: hidden;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: var(--doraemon-blue);
+    color: white;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    padding: 0.4rem 1.2rem;
+    border-radius: 100px;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: popIn 0.6s 0.3s cubic-bezier(0.34,1.56,0.64,1) forwards;
+  }
+
+  .hero-doraemon {
+    font-size: clamp(5rem, 20vw, 13rem);
+    line-height: 1;
+    filter: drop-shadow(0 20px 40px rgba(26,143,227,0.3));
+    opacity: 0;
+    animation: popIn 0.8s 0.5s cubic-bezier(0.34,1.56,0.64,1) forwards;
+    animation-fill-mode: both;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(3rem, 12vw, 8rem);
+    line-height: 1;
+    color: var(--doraemon-blue);
+    text-shadow:
+      3px 3px 0 rgba(0,102,204,0.2),
+      0 4px 20px rgba(26,143,227,0.3);
+    opacity: 0;
+    animation: popIn 0.8s 0.7s cubic-bezier(0.34,1.56,0.64,1) forwards;
+  }
+
+  .hero-title span {
+    color: var(--red);
+  }
+
+  .hero-sub {
+    margin-top: 1rem;
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    color: var(--muted);
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    opacity: 0;
+    animation: fadeUp 0.8s 1s ease forwards;
+  }
+
+  .hero-stars {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1.2rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 1.2s ease forwards;
+  }
+
+  .hero-stars span {
+    font-size: 1.5rem;
+    animation: bounce 1.5s infinite;
+  }
+  .hero-stars span:nth-child(2) { animation-delay: 0.2s; }
+  .hero-stars span:nth-child(3) { animation-delay: 0.4s; }
+  .hero-stars span:nth-child(4) { animation-delay: 0.6s; }
+  .hero-stars span:nth-child(5) { animation-delay: 0.8s; }
+
+  .scroll-cue {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    opacity: 0;
+    animation: fadeUp 1s 1.6s ease forwards;
+  }
+
+  .scroll-cue span {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    color: var(--doraemon-blue);
+    opacity: 0.7;
+  }
+
+  .scroll-dots {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .scroll-dots i {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--doraemon-blue);
+    opacity: 0;
+    animation: dotFall 1.5s infinite;
+  }
+  .scroll-dots i:nth-child(2) { animation-delay: 0.2s; }
+  .scroll-dots i:nth-child(3) { animation-delay: 0.4s; }
+
+  /* ── SECTION HEADER ── */
+  .section-head {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 4rem 2rem 0.5rem;
+  }
+
+  .section-head h2 {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(2rem, 6vw, 4rem);
+    color: var(--dark);
+  }
+
+  .rainbow-line {
+    height: 5px;
+    width: 200px;
+    margin: 0.8rem auto;
+    border-radius: 100px;
+    background: linear-gradient(90deg, #ff3b3b, #ff8c00, #ffd700, #2ecc71, #1a8fe3, #9b59b6, #ff6eb4);
+  }
+
+  .section-head p {
+    color: var(--muted);
+    font-size: 1.05rem;
+    font-style: italic;
+    margin-top: 0.5rem;
+  }
+
+  /* ── GRID ── */
+  .chars-section {
+    position: relative;
+    z-index: 1;
+    padding: 3rem 1.5rem 6rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .chars-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 2rem;
+  }
+
+  /* ── CARD ── */
+  .card {
+    position: relative;
+    border-radius: 24px;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(50px) scale(0.95);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .card.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  .card:hover {
+    transform: translateY(-8px) scale(1.02) !important;
+  }
+
+  /* ── FLIP ── */
+  .flip-scene {
+    perspective: 1000px;
+    border-radius: 24px;
+  }
+
+  .flip-box {
+    width: 100%;
+    border-radius: 24px;
+    transform-style: preserve-3d;
+    transition: transform 0.75s cubic-bezier(0.4, 0.2, 0.2, 1);
+    position: relative;
+  }
+
+  .card:hover .flip-box,
+  .card.flipped .flip-box {
+    transform: rotateY(180deg);
+  }
+
+  .flip-front,
+  .flip-back {
+    border-radius: 24px;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    overflow: hidden;
+  }
+
+  .flip-back {
+    position: absolute;
+    inset: 0;
+    transform: rotateY(180deg);
+  }
+
+  /* ── FRONT ── */
+  .front-visual {
+    height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .front-visual::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--card-bg);
+    opacity: 1;
+  }
+
+  /* Bubble pattern */
+  .front-visual::after {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: -50%;
+    left: -50%;
+    background: radial-gradient(circle at 30% 70%, rgba(255,255,255,0.25) 0%, transparent 40%),
+                radial-gradient(circle at 70% 30%, rgba(255,255,255,0.2) 0%, transparent 35%),
+                radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .char-emoji {
+    font-size: 6.5rem;
+    position: relative;
+    z-index: 1;
+    filter: drop-shadow(0 8px 16px rgba(0,0,0,0.15));
+    transition: transform 0.3s ease;
+    user-select: none;
+  }
+
+  .card:hover .char-emoji {
+    transform: scale(1.1) rotate(-5deg);
+  }
+
+  /* Number badge */
+  .num-badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Fredoka One', cursive;
+    font-size: 0.85rem;
+    color: var(--card-accent);
+    z-index: 2;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  .front-body {
+    padding: 1.2rem 1.4rem 1.4rem;
+    background: white;
+  }
+
+  .char-faction {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    color: var(--card-accent);
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+    font-weight: 700;
+  }
+
+  .char-name {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.55rem;
+    color: var(--dark);
+    line-height: 1.1;
+    margin-bottom: 0.2rem;
+  }
+
+  .char-nickname {
+    font-size: 0.82rem;
+    color: var(--muted);
+    font-style: italic;
+    font-weight: 600;
+  }
+
+  /* Colored bottom strip */
+  .color-strip {
+    height: 5px;
+    background: var(--card-bg);
+    border-radius: 0 0 24px 24px;
+  }
+
+  /* ── BACK ── */
+  .flip-back {
+    background: var(--card-bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.8rem 1.5rem;
+    text-align: center;
+    gap: 0.8rem;
+  }
+
+  .back-emoji {
+    font-size: 3.5rem;
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.15));
+  }
+
+  .back-name {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.6rem;
+    color: white;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+
+  .back-desc {
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: rgba(255,255,255,0.92);
+    font-weight: 600;
+  }
+
+  .back-trait {
+    display: inline-block;
+    background: rgba(255,255,255,0.25);
+    color: white;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    padding: 0.3rem 0.8rem;
+    border-radius: 100px;
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+  }
+
+  /* tap hint */
+  .tap-hint {
+    position: absolute;
+    bottom: 14px;
+    right: 16px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.52rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    pointer-events: none;
+    z-index: 3;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 4rem 2rem 3rem;
+    background: linear-gradient(to top, rgba(26,143,227,0.08), transparent);
+  }
+
+  .footer-icon { font-size: 3rem; margin-bottom: 1rem; display: block; }
+  footer p {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* ── KEYFRAMES ── */
+  @keyframes popIn {
+    from { opacity: 0; transform: scale(0.5); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  @keyframes dotFall {
+    0% { opacity: 0; transform: translateY(-4px); }
+    50% { opacity: 1; }
+    100% { opacity: 0; transform: translateY(4px); }
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 600px) {
+    .chars-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .front-visual { height: 160px; }
+    .char-emoji { font-size: 4.5rem; }
+    .char-name { font-size: 1.1rem; }
+    .front-body { padding: 0.8rem 1rem 0.8rem; }
+    .back-desc { font-size: 0.76rem; }
+    .flip-back { padding: 1.2rem 1rem; }
+    .back-emoji { font-size: 2.5rem; }
+    .back-name { font-size: 1.2rem; }
+  }
+
+  @media (max-width: 380px) {
+    .chars-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Card shadow on hover */
+  .card:hover {
+    filter: drop-shadow(0 20px 40px rgba(0,0,0,0.15));
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <span class="hero-badge">🌟 The Complete Character Guide</span>
+  <span class="hero-doraemon">🤖</span>
+  <h1 class="hero-title">DORA<span>EMON</span></h1>
+  <p class="hero-sub">Friends, Gadgets & Adventures from the Future</p>
+  <div class="hero-stars">
+    <span>⭐</span><span>🌸</span><span>🍀</span><span>🎈</span><span>⭐</span>
+  </div>
+  <div class="scroll-cue">
+    <span>Scroll to Meet Them</span>
+    <div class="scroll-dots">
+      <i></i><i></i><i></i>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CHARACTERS ═══ -->
+<div class="section-head">
+  <h2>Meet the Gang! 🎉</h2>
+  <div class="rainbow-line"></div>
+  <p>Hover or tap a card to learn more about each character</p>
+</div>
+
+<section class="chars-section">
+  <div class="chars-grid" id="grid"></div>
+</section>
+
+<footer>
+  <span class="footer-icon">🤖</span>
+  <p>Doraemon © Fujiko F. Fujio / Shogakukan · Fan Tribute · Made with ❤️</p>
+</footer>
+
+<script>
+const characters = [
+  {
+    name: "Doraemon",
+    nickname: "The Blue Robot Cat",
+    emoji: "🤖",
+    role: "Robot from the Future",
+    bg: "linear-gradient(135deg, #1a8fe3, #0d6abf)",
+    accent: "#1a8fe3",
+    trait: "Gadget Master",
+    desc: "A robotic cat from the 22nd century sent to help Nobita. His 4D pocket holds hundreds of futuristic gadgets, though things rarely go as planned! His iconic blue body has no ears — they were chewed off by mice."
+  },
+  {
+    name: "Nobita Nobi",
+    nickname: "The Loveable Underdog",
+    emoji: "😅",
+    role: "Main Character",
+    bg: "linear-gradient(135deg, #ff8c00, #e67e00)",
+    accent: "#ff8c00",
+    trait: "Expert Napper",
+    desc: "Nobita is lazy, clumsy, and always getting into trouble — but his kind heart is unmatched. He scores 0 on almost every test yet shows incredible courage when his friends need him most."
+  },
+  {
+    name: "Shizuka Minamoto",
+    nickname: "The Smart Sweetheart",
+    emoji: "👧",
+    role: "Nobita's Best Friend",
+    bg: "linear-gradient(135deg, #ff6eb4, #e05599)",
+    accent: "#ff6eb4",
+    trait: "Violin & Kindness",
+    desc: "The smartest and kindest in the group. Shizuka loves taking baths, playing violin, and helping her friends. She is Nobita's childhood crush and future wife — a fact Doraemon already knows."
+  },
+  {
+    name: "Takeshi Goda",
+    nickname: "Big G / Gian",
+    emoji: "💪",
+    role: "The Class Bully",
+    bg: "linear-gradient(135deg, #e74c3c, #c0392b)",
+    accent: "#e74c3c",
+    trait: "Terrible Singer",
+    desc: "Gian is big, loud, and bossy — but fiercely loyal to his real friends. His singing is so terrible it physically hurts listeners, yet he performs concerts proudly. Despite his bully exterior, he shows remarkable bravery in crisis."
+  },
+  {
+    name: "Suneo Honekawa",
+    nickname: "The Show-Off",
+    emoji: "🤏",
+    role: "Rich Kid Braggart",
+    bg: "linear-gradient(135deg, #27ae60, #1e8449)",
+    accent: "#27ae60",
+    trait: "Master Boaster",
+    desc: "Suneo loves showing off his wealth, toys, and vacations — often excluding Nobita just to feel superior. He is manipulative and sly, but surprisingly artistic and a talented manga artist at heart."
+  },
+  {
+    name: "Sewashi Nobi",
+    nickname: "The Future Grandson",
+    emoji: "👦",
+    role: "Nobita's Descendant",
+    bg: "linear-gradient(135deg, #9b59b6, #7d3c98)",
+    accent: "#9b59b6",
+    trait: "Time Traveler",
+    desc: "Nobita's great-great-grandson from the 22nd century. He's the one who sent Doraemon back in time to help Nobita build a better future. He only appears occasionally but is the reason the whole adventure started!"
+  },
+  {
+    name: "Tamako Nobi",
+    nickname: "Nobita's Strict Mom",
+    emoji: "👩",
+    role: "Nobita's Mother",
+    bg: "linear-gradient(135deg, #e67e22, #d35400)",
+    accent: "#e67e22",
+    trait: "Rolling Pin Ready",
+    desc: "Nobita's loving but strict mother. She scolds Nobita constantly for his laziness and bad grades, armed with her trusty rolling pin. Despite her strictness, she cares deeply for her son and is a wonderful homemaker."
+  },
+  {
+    name: "Nobisuke Nobi",
+    nickname: "Nobita's Gentle Dad",
+    emoji: "👨",
+    role: "Nobita's Father",
+    bg: "linear-gradient(135deg, #00b8a9, #008c82)",
+    accent: "#00b8a9",
+    trait: "Comic Book Lover",
+    desc: "Nobita's easy-going and understanding father. He works as a salaryman but always finds time for hobbies like photography and reading manga. He often sympathizes with Nobita and secretly sneaks him treats behind Tamako's back."
+  },
+  {
+    name: "Dekisugi Hidetoshi",
+    nickname: "The Perfect Student",
+    emoji: "🤓",
+    role: "Top of the Class",
+    bg: "linear-gradient(135deg, #3498db, #2980b9)",
+    accent: "#3498db",
+    trait: "100% Always",
+    desc: "Nobita's academic rival — effortlessly perfect in studies, sports, and kindness. Dekisugi never boasts and is genuinely nice to everyone, which ironically makes Nobita even more jealous. He has a huge crush on Shizuka too."
+  },
+  {
+    name: "Dorami",
+    nickname: "Doraemon's Little Sister",
+    emoji: "🌸",
+    role: "Robot from the Future",
+    bg: "linear-gradient(135deg, #f9ca24, #f0932b)",
+    accent: "#f0932b",
+    trait: "Responsible & Smart",
+    desc: "Doraemon's younger sister, a yellow robotic cat with a red ribbon. She is more responsible, efficient, and better at using gadgets than her brother. She sometimes substitutes for Doraemon and has a fear of cockroaches."
+  },
+  {
+    name: "Jaiko Goda",
+    nickname: "Gian's Sweet Sister",
+    emoji: "🎀",
+    role: "Gian's Younger Sister",
+    bg: "linear-gradient(135deg, #fd79a8, #e84393)",
+    accent: "#fd79a8",
+    trait: "Manga Artist",
+    desc: "Gian's kind and talented younger sister who dreams of becoming a manga artist. Unlike her loud brother, Jaiko is gentle and creative. Nobita was once nearly arranged to marry her — until Doraemon saved the day!"
+  },
+  {
+    name: "Suneo's Mom",
+    nickname: "The Glamorous Parent",
+    emoji: "💅",
+    role: "Honekawa Matriarch",
+    bg: "linear-gradient(135deg, #a29bfe, #6c5ce7)",
+    accent: "#6c5ce7",
+    trait: "Fashion Obsessed",
+    desc: "Suneo's fashionable and proud mother who spoils her son endlessly. She shares Suneo's love of showing off wealth and social status. Her over-pampering is largely responsible for Suneo's boastful personality."
+  },
+  {
+    name: "Mini-Dora",
+    nickname: "Pocket-Sized Helper",
+    emoji: "🐱",
+    role: "Tiny Robot Cat",
+    bg: "linear-gradient(135deg, #55efc4, #00b894)",
+    accent: "#00b894",
+    trait: "Small but Mighty",
+    desc: "A miniature version of Doraemon that appeared in special stories. Despite being tiny, Mini-Dora communicates in squeaks and is just as determined and helpful as the original — a beloved side character among fans."
+  },
+  {
+    name: "Sensei (Teacher)",
+    nickname: "The Strict Educator",
+    emoji: "📚",
+    role: "Nobita's Schoolteacher",
+    bg: "linear-gradient(135deg, #636e72, #2d3436)",
+    accent: "#636e72",
+    trait: "Perpetually Disappointed",
+    desc: "Nobita's long-suffering schoolteacher who has given up expecting good grades from his most notorious student. He is strict but fair, and secretly hopes that one day Nobita will surprise him — which occasionally happens."
+  },
+  {
+    name: "Nobishiro",
+    nickname: "Nobita's Future Self",
+    emoji: "🧔",
+    role: "Adult Nobita",
+    bg: "linear-gradient(135deg, #fdcb6e, #e17055)",
+    accent: "#e17055",
+    trait: "Growth & Determination",
+    desc: "The grown-up version of Nobita who married Shizuka and built a better life. He serves as living proof that Doraemon's mission succeeded. Adult Nobita is mature, responsible, and still warm-hearted — everything young Nobita works toward."
+  },
+  {
+    name: "Gian's Mom",
+    nickname: "The Iron Fist",
+    emoji: "🍳",
+    role: "Goda Family Mom",
+    bg: "linear-gradient(135deg, #d63031, #b71c1c)",
+    accent: "#d63031",
+    trait: "Runs the Shop",
+    desc: "Gian's fierce and hardworking mother who runs the family grocery store. She is the only person in the world who can tame Gian with a single look. Even Gian trembles before her authority — a running gag in the series."
+  }
+];
+
+const grid = document.getElementById('grid');
+
+characters.forEach((c, i) => {
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.style.setProperty('--card-bg', c.bg);
+  card.style.setProperty('--card-accent', c.accent);
+
+  card.innerHTML = `
+    <div class="flip-scene">
+      <div class="flip-box">
+
+        <div class="flip-front">
+          <div class="front-visual" style="background: ${c.bg}">
+            <div class="num-badge" style="color:${c.accent}">${String(i+1).padStart(2,'0')}</div>
+            <div class="char-emoji">${c.emoji}</div>
+          </div>
+          <div class="front-body">
+            <div class="char-faction" style="color:${c.accent}">${c.role}</div>
+            <div class="char-name">${c.name}</div>
+            <div class="char-nickname">${c.nickname}</div>
+          </div>
+          <div class="color-strip" style="background:${c.bg}"></div>
+        </div>
+
+        <div class="flip-back" style="background: ${c.bg}">
+          <div class="back-emoji">${c.emoji}</div>
+          <div class="back-name">${c.name}</div>
+          <div class="back-desc">${c.desc}</div>
+          <span class="back-trait">✦ ${c.trait}</span>
+        </div>
+
+      </div>
+    </div>
+    <div class="tap-hint">TAP TO FLIP ↩</div>
+  `;
+
+  card.addEventListener('click', () => card.classList.toggle('flipped'));
+  grid.appendChild(card);
+});
+
+// Scroll reveal with stagger
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, idx) => {
+    if (entry.isIntersecting) {
+      const card = entry.target;
+      const col = Array.from(card.parentNode.children).indexOf(card) % 4;
+      card.style.transitionDelay = `${col * 100}ms`;
+      card.classList.add('visible');
+      observer.unobserve(card);
+    }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+
+document.querySelectorAll('.card').forEach(c => observer.observe(c));
+</script>
+</body>
+</html>
