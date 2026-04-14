@@ -1,0 +1,24 @@
+name: cicd
+
+on:
+    push:
+        branches:
+            - main
+
+jobs:
+    deploy_to_server:
+        runs-on: ubuntu-latest
+        
+        steps:    
+        - name: Deploy via ssh
+          uses: appleboy/ssh-action@master
+          with:
+            host: ${{secrets.HOST}}
+            username: ${{ secrets.USERNAME }}
+            key: ${{ secrets.KEY }}
+            script: | 
+              cd /home/ubuntu/Three-Tier-Applications/Docker-Compose-Projects
+              git pull origin main
+              sudo docker-compose down
+              sudo docker-compose up --build -d
+                  
