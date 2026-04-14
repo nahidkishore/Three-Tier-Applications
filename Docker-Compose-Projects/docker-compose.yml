@@ -6,9 +6,11 @@ services:
       context: frontend/
     image: fronted-image
     ports: 
-      - "80:80"
+      - "8080:80"
     depends_on:
       - backend
+    environment:
+      - REACT_APP_API_BASE_URL=http://backend:3500
     networks:
       - three-tier-net 
   backend:
@@ -35,6 +37,8 @@ services:
       - MYSQL_DATABASE=school
     volumes:
       - mysql-data:/var/lib/mysql
+    networks:
+      - three-tier-net
 volumes:
   mysql-data:
 networks:
