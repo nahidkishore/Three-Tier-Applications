@@ -35,7 +35,7 @@ Before you begin, ensure that you have the following installed:
      ```
    - Access the MySQL container:
      ```bash
-     docker exec -it mysql-container /bin/bash
+     docker exec -it mysql-container mysql -u root -p
      ```
    - Inside the container, create tables for the database:
      ```sql
