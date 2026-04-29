@@ -9,7 +9,10 @@ This repository demonstrates the deployment of a three-tier application using Do
 Before you begin, ensure that you have the following installed:
 
 - [Docker](https://www.docker.com/get-started)
-  
+- Post Installation create docker network for your project
+  ```bash
+  docker network create three-tier-network
+  ```
 ## Project Structure
 
 - **backend**: Node.js application serving as the backend.
@@ -17,6 +20,7 @@ Before you begin, ensure that you have the following installed:
 - **mysql**: Dockerfile and configurations for the MySQL database.
 
 ## Deployment Steps
+
 
 1. **MySQL Database:**
 
@@ -31,7 +35,7 @@ Before you begin, ensure that you have the following installed:
      ```
    - Access the MySQL container:
      ```bash
-     docker exec -it mysql-container /bin/bash
+     docker exec -it mysql-container mysql -u root -p
      ```
    - Inside the container, create tables for the database:
      ```sql
